@@ -1,6 +1,5 @@
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/screen/main/tab/chat/f_chat_dart.dart';
-import 'package:fast_app_base/screen/main/tab/favorite/f_favorite.dart';
 import 'package:fast_app_base/screen/main/tab/home/f_home.dart';
 import 'package:fast_app_base/screen/main/tab/local_life/f_local_life.dart';
 import 'package:fast_app_base/screen/main/tab/my/f_my.dart';
