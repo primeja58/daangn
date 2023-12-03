@@ -4,7 +4,7 @@ import 'package:fast_app_base/screen/main/fab/w_floating_daangn_button.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_product_post_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../common/widget/w_line.dart';
+import '../../../notification/s_notification.dart';
 import '../../fab/w_floating_daangn_button.reverpod.dart';
 
 class HomeFragment extends ConsumerStatefulWidget {
@@ -53,6 +53,11 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
                 .toList(),
             child: Text(title),
           ),
+          actions: [
+            IconButton(onPressed: (){
+              Nav.push(NotificationScreen());
+            }, icon: Icon(Icons.notification_add_rounded))
+          ],
         ),
         Expanded(
           child: ListView.separated(
@@ -68,3 +73,4 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
     );
   }
 }
+

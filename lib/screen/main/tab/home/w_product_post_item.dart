@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/entity/post/vo_product_post.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProductPostItem extends StatelessWidget {
