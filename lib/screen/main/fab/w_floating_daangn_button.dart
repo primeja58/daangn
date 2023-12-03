@@ -13,8 +13,9 @@ class FloatingDaangnButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isExpanded = ref.watch(floatingButtonIsExpandedProvider);
-    final isSmall = ref.watch(floatingButtonIsSmallProvider);
+    final floatingButtonState = ref.watch(floatingButtonStateProvider);
+    final isExpanded = floatingButtonState.isExpanded;
+    final isSmall = floatingButtonState.isSmall;
 
     return Stack(
       children: [
@@ -57,8 +58,7 @@ class FloatingDaangnButton extends ConsumerWidget {
               ),
               Tap(
                 onTap: () {
-                  ref.read(floatingButtonIsSmallProvider.notifier).state = true;
-                  ref.read(floatingButtonIsExpandedProvider.notifier).state = !isExpanded;
+                  ref.read(floatingButtonStateProvider.notifier).onTapButton();
                 },
                 child: AnimatedContainer(
                   duration: duration,

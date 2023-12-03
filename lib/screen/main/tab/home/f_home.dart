@@ -17,12 +17,12 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
   @override
   void initState() {
     scrollController.addListener(() {
-      final isSmall = ref.read(floatingButtonIsSmallProvider);
+      final floatingState = ref.read(floatingButtonStateProvider);
 
-      if (scrollController.position.pixels > 100 && !isSmall) {
-        ref.read(floatingButtonIsSmallProvider.notifier).state = true;
-      } else if (scrollController.position.pixels < 100 && isSmall) {
-        ref.read(floatingButtonIsSmallProvider.notifier).state =false;
+      if (scrollController.position.pixels > 100 && !floatingState.isSmall) {
+        ref.read(floatingButtonStateProvider.notifier).changeButtonSize(true);
+      } else if (scrollController.position.pixels < 100 && floatingState.isSmall) {
+        ref.read(floatingButtonStateProvider.notifier).changeButtonSize(false);
       }
     });
     super.initState();

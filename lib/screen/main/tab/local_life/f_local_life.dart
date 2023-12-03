@@ -1,15 +1,43 @@
-import 'package:flutter/material.dart';
 
-class LocalLifeFragment extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../fab/w_floating_daangn_button.reverpod.dart';
+
+
+class LocalLifeFragment extends ConsumerStatefulWidget {
   const LocalLifeFragment({super.key});
 
   @override
-  State<LocalLifeFragment> createState() => _LocalLifeFragmentState();
+  ConsumerState<LocalLifeFragment> createState() => _LocalLifeFragmentState();
 }
 
-class _LocalLifeFragmentState extends State<LocalLifeFragment> {
+class _LocalLifeFragmentState extends ConsumerState<LocalLifeFragment> {
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      final floatingState = ref.read(floatingButtonStateProvider);
+
+      if (scrollController.position.pixels > 100 && !floatingState.isSmall) {
+        ref.read(floatingButtonStateProvider.notifier).changeButtonSize(true);
+      } else if (scrollController.position.pixels < 100 && floatingState.isSmall) {
+        ref.read(floatingButtonStateProvider.notifier).changeButtonSize(false);
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView(
+      controller: scrollController,
+      children: [
+        Container(height: 500,color: Colors.grey,),
+        Container(height: 500,color: Colors.black54,),
+        Container(height: 500,color: Colors.blueGrey,),
+        Container(height: 500,color: Colors.black45,),
+      ],
+    );
   }
 }

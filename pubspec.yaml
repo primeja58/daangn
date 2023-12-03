@@ -68,13 +68,14 @@ dependencies:
   keyboard_utils_fork: ^0.0.4
 
   #network
-  dio: ^5.0.0
+  dio: ^5.4.0
   retrofit: ^4.0.1
   freezed: ^2.3.4
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
   flutter_riverpod: ^2.4.9
   flutter_colorpicker: ^1.0.3
+  flutter_hooks: ^0.20.3
 
 dev_dependencies:
   flutter_test:
