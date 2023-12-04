@@ -55,8 +55,8 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
           ),
           actions: [
             IconButton(onPressed: (){
-              Nav.push(NotificationScreen());
-            }, icon: Icon(Icons.notification_add_rounded))
+              Nav.push(const NotificationScreen());
+            }, icon: const Icon(Icons.notification_add_rounded))
           ],
         ),
         Expanded(
