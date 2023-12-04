@@ -27,7 +27,7 @@ class PostContent extends StatelessWidget {
           const Center(
             child: CircularProgressIndicator(),
         ),
-        if(productPost != null) productPost!.content.text.make(),
+        if(productPost != null) productPost!.content.text.make().pOnly(top: 30, bottom: 60),
       ],
     ).pSymmetric(h: 15);
   }

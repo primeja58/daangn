@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/widget/w_round_button.dart';
 import 'package:fast_app_base/entity/post/vo_product_post.dart';
 import 'package:fast_app_base/entity/post/vo_simple_product_post.dart';
+import 'package:fast_app_base/entity/product/vo_product.dart';
 import 'package:fast_app_base/screen/post_detail/provider/product_post_provider.dart';
 import 'package:fast_app_base/screen/post_detail/w_post_content.dart';
 import 'package:fast_app_base/screen/post_detail/w_user_profile.dart';
@@ -20,7 +22,10 @@ class PostDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productPost = ref.watch(productPostProvider(id));
     return productPost.when(
-        data: (data) => _PostDetail(data.simpleProductPost),
+        data: (data) => _PostDetail(
+              data.simpleProductPost,
+              productPost: data,
+            ),
         error: (error, trace) => '에러발생'.text.make(),
         loading: () => simpleProductPost != null
             ? _PostDetail(simpleProductPost!)
@@ -33,6 +38,7 @@ class PostDetailScreen extends ConsumerWidget {
 class _PostDetail extends HookWidget {
   final SimpleProductPost simpleProductPost;
   final ProductPost? productPost;
+  static const bottomMenuHeight = 100.0;
 
   const _PostDetail(this.simpleProductPost, {super.key, this.productPost});
 
@@ -45,6 +51,7 @@ class _PostDetail extends HookWidget {
         children: [
           Positioned.fill(
             child: SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: bottomMenuHeight),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,8 +73,59 @@ class _PostDetail extends HookWidget {
           const _AppBar(),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(height: 100, color: Colors.blue),
+            child: PostDetailBottomMenu(simpleProductPost.product),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class PostDetailBottomMenu extends StatelessWidget {
+  final Product product;
+
+  const PostDetailBottomMenu(
+    this.product, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: _PostDetail.bottomMenuHeight,
+      child: Column(
+        children: [
+          Line(),
+          Expanded(
+            child: Row(
+              children: [
+                Image.asset('$basePath/detail/heart_on.png', height: 25),
+                width30,
+                const VerticalDivider().pSymmetric(v: 15),
+                width30,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          product.price.toWon().text.bold.size(15).make(),
+                        ],
+                      ),
+                      '가격 제안하기'.text.orange400.underline.make(),
+                    ],
+                  ),
+                ),
+                RoundButton(
+                    text: '채팅하기',
+                    onTap: () {},
+                    borderRadius: 7,
+                    bgColor: Colors.orange),
+                width10,
+              ],
+            ),
+          ),
         ],
       ),
     );
