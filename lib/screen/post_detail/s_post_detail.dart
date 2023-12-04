@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fast_app_base/app.dart';
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/entity/post/vo_product_post.dart';
 import 'package:fast_app_base/entity/post/vo_simple_product_post.dart';
 import 'package:fast_app_base/screen/post_detail/provider/product_post_provider.dart';
+import 'package:fast_app_base/screen/post_detail/w_post_content.dart';
+import 'package:fast_app_base/screen/post_detail/w_user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,7 @@ class PostDetailScreen extends ConsumerWidget {
         error: (error, trace) => '에러발생'.text.make(),
         loading: () => simpleProductPost != null
             ? _PostDetail(simpleProductPost!)
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               ));
   }
@@ -39,48 +40,81 @@ class _PostDetail extends HookWidget {
   Widget build(BuildContext context) {
     final pageController = usePageController();
 
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                    height: context.deviceHeight,
-                    width: context.deviceWidth,
-                    child: Stack(
-                      children: [
-                        PageView(
-                          controller: pageController,
-                          children: simpleProductPost.product.images
-                              .map((url) => CachedNetworkImage(
-                                    imageUrl: url,
-                                    fit: BoxFit.fill,
-                                  ))
-                              .toList(),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SmoothPageIndicator(
-                            controller: pageController,
-                            count: simpleProductPost.product.images.length,
-                            effect: const JumpingDotEffect(),
-                            onDotClicked: (index) {},
-                          ),
-                        )
-                      ],
-                    ))
-              ],
+    return Material(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _ImagePager(
+                    pageController: pageController,
+                    simpleProductPost: simpleProductPost,
+                  ),
+                  UserProfileWidget(
+                    simpleProductPost.product.user,
+                    address: simpleProductPost.address,
+                  ),
+                  PostContent(
+                      simpleProductPost: simpleProductPost,
+                      productPost: productPost),
+                ],
+              ),
             ),
           ),
-        ),
-        const _AppBar(),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(height: 100, color: Colors.blue),
-        )
-      ],
+          const _AppBar(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(height: 100, color: Colors.blue),
+          )
+        ],
+      ),
     );
+  }
+}
+
+class _ImagePager extends StatelessWidget {
+  const _ImagePager({
+    super.key,
+    required this.pageController,
+    required this.simpleProductPost,
+  });
+
+  final PageController pageController;
+  final SimpleProductPost simpleProductPost;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 400,
+        width: context.deviceWidth,
+        child: Stack(
+          children: [
+            PageView(
+              controller: pageController,
+              children: simpleProductPost.product.images
+                  .map((url) => CachedNetworkImage(
+                        imageUrl: url,
+                        fit: BoxFit.fill,
+                      ))
+                  .toList(),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SmoothPageIndicator(
+                controller: pageController,
+                count: simpleProductPost.product.images.length,
+                effect: const JumpingDotEffect(
+                  verticalOffset: 10,
+                  dotColor: Colors.white54,
+                  activeDotColor: Colors.black45,
+                ),
+                onDotClicked: (index) {},
+              ),
+            )
+          ],
+        ));
   }
 }
 
