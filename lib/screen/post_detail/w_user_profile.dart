@@ -44,7 +44,7 @@ class UserProfileWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     '${user.temperature}℃'.text.size(16).color(Colors.green).make(),
-                    SizedBox(
+                    const SizedBox(
                       width: 60,
                         child: LinearProgressIndicator(
                           value: 0.3,

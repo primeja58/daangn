@@ -51,7 +51,7 @@ class _PostDetail extends HookWidget {
         children: [
           Positioned.fill(
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: bottomMenuHeight),
+              padding: const EdgeInsets.only(bottom: bottomMenuHeight),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -95,7 +95,7 @@ class PostDetailBottomMenu extends StatelessWidget {
       height: _PostDetail.bottomMenuHeight,
       child: Column(
         children: [
-          Line(),
+          const Line(),
           Expanded(
             child: Row(
               children: [

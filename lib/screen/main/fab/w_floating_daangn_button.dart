@@ -5,12 +5,13 @@ import 'package:fast_app_base/screen/main/fab/w_floating_daangn_button.reverpod.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../write/s_write.dart';
 import '../s_main.dart';
 
 class FloatingDaangnButton extends ConsumerWidget {
   FloatingDaangnButton({super.key});
 
-  static const height =100.0;
+  static const height = 100.0;
 
   final duration = 300.ms;
 
@@ -27,7 +28,7 @@ class FloatingDaangnButton extends ConsumerWidget {
           child: AnimatedContainer(
             duration: duration,
             color:
-            isExpanded ? Colors.black.withOpacity(0.4) : Colors.transparent,
+                isExpanded ? Colors.black.withOpacity(0.4) : Colors.transparent,
           ),
         ),
         Align(
@@ -39,24 +40,49 @@ class FloatingDaangnButton extends ConsumerWidget {
               AnimatedOpacity(
                 opacity: isExpanded ? 1 : 0,
                 duration: duration,
-                child: Container(
-                  width: 160,
-                  padding: const EdgeInsets.all(15),
-                  margin: const EdgeInsets.only(right: 15, bottom: 10),
-                  decoration: BoxDecoration(
-                    color: context.appColors.floatingAcionLayer,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _floatItem('알바', '$basePath/fab/fab_01.png'),
-                      _floatItem('과외/클래스', '$basePath/fab/fab_02.png'),
-                      _floatItem('농수산물', '$basePath/fab/fab_03.png'),
-                      _floatItem('부동산', '$basePath/fab/fab_04.png'),
-                      _floatItem('중고차', '$basePath/fab/fab_05.png'),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 160,
+                      padding: const EdgeInsets.all(15),
+                      margin: const EdgeInsets.only(right: 15, bottom: 10),
+                      decoration: BoxDecoration(
+                        color: context.appColors.floatingAcionLayer,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _floatItem('알바', '$basePath/fab/fab_01.png'),
+                          _floatItem('과외/클래스', '$basePath/fab/fab_02.png'),
+                          _floatItem('농수산물', '$basePath/fab/fab_03.png'),
+                          _floatItem('부동산', '$basePath/fab/fab_04.png'),
+                          _floatItem('중고차', '$basePath/fab/fab_05.png'),
+                        ],
+                      ),
+                    ),
+                    height5,
+                    Tap(
+                      onTap: () {
+                        Nav.push(const WriteScreen());
+                      },
+                      child: Container(
+                        width: 160,
+                        padding: const EdgeInsets.all(15),
+                        margin: const EdgeInsets.only(right: 15, bottom: 10),
+                        decoration: BoxDecoration(
+                          color: context.appColors.floatingAcionLayer,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _floatItem('내 물건 팔기', '$basePath/fab/fab_06.png'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Tap(
@@ -77,8 +103,12 @@ class FloatingDaangnButton extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AnimatedRotation(
-                          turns: isExpanded ? 0.125 : 0, duration: duration,
-                          child: const Icon(Icons.add, color: Colors.white,)),
+                          turns: isExpanded ? 0.125 : 0,
+                          duration: duration,
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          )),
                       AnimatedWidthCollapse(
                         visible: !isSmall,
                         duration: duration,
@@ -88,9 +118,10 @@ class FloatingDaangnButton extends ConsumerWidget {
                   ),
                 ),
               ).pOnly(
-                bottom: MainScreenState.bottomNavigationBarHeight +
-                    context.viewPaddingBottom + 10,
-                right: 20),
+                  bottom: MainScreenState.bottomNavigationBarHeight +
+                      context.viewPaddingBottom +
+                      10,
+                  right: 20),
             ],
           ),
         ),
@@ -112,4 +143,3 @@ class FloatingDaangnButton extends ConsumerWidget {
     );
   }
 }
-

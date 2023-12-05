@@ -50,7 +50,7 @@ class _NotificationItemWidgetState
                     final list = ref.read(notificationProvider)!;
                     list.remove(widget.notification);
                     ref.read(notificationProvider.notifier).state= List.of(list);
-                  }, icon: Icon(Icons.delete)),
+                  }, icon: const Icon(Icons.delete)),
               ],
             ),
             height10,
