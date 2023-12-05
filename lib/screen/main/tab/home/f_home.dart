@@ -1,6 +1,7 @@
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/entity/dummies.dart';
 import 'package:fast_app_base/screen/main/fab/w_floating_daangn_button.dart';
+import 'package:fast_app_base/screen/main/tab/home/provider/post_provider.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_product_post_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +36,7 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
 
   @override
   Widget build(BuildContext context) {
+    final postList =ref.watch(postProvider);
     return Column(
       children: [
         AppBar(

@@ -2,17 +2,27 @@ import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/common/util/app_keyboard_util.dart';
 import 'package:fast_app_base/common/widget/round_button_theme.dart';
 import 'package:fast_app_base/common/widget/w_round_button.dart';
+import 'package:fast_app_base/entity/post/vo_simple_product_post.dart';
+import 'package:fast_app_base/entity/product/product_status.dart';
+import 'package:fast_app_base/screen/main/tab/home/provider/post_provider.dart';
+import 'package:fast_app_base/screen/post_detail/s_post_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WriteScreen extends StatefulWidget {
+import '../../entity/dummies.dart';
+import '../../entity/product/vo_product.dart';
+import '../../entity/user/vo_address.dart';
+
+class WriteScreen extends ConsumerStatefulWidget {
   const WriteScreen({super.key});
 
   @override
-  State<WriteScreen> createState() => _WriteScreenState();
+  ConsumerState<WriteScreen> createState() => _WriteScreenState();
 }
 
-class _WriteScreenState extends State<WriteScreen> with KeyboardDetector {
-  final List<String> imageList = [];
+class _WriteScreenState extends ConsumerState<WriteScreen>
+    with KeyboardDetector {
+  final List<String> imageList = [picSum(443)];
 
   final titleController = TextEditingController();
   final priceController = TextEditingController();
@@ -69,7 +79,9 @@ class _WriteScreenState extends State<WriteScreen> with KeyboardDetector {
                       width: 15,
                       height: 15,
                       child: CircularProgressIndicator(),
-                    ).pOnly(right: 80)
+                    ).pOnly(
+                      right: 80,
+                    )
                   : null,
               onTap: () {
                 final title = titleController.text;
@@ -78,6 +90,29 @@ class _WriteScreenState extends State<WriteScreen> with KeyboardDetector {
                 setState(() {
                   isLoading = true;
                 });
+                final list = ref.read(postProvider);
+                final simpleProductPost = SimpleProductPost(
+                    6,
+                    user3,
+                    Product(
+                      user3,
+                      title,
+                      price,
+                      ProductStatus.normal,
+                      imageList,
+                    ),
+                    title,
+                    Address('서울시 강남구 역삼동', '역삼동'),
+                    0,
+                    0,
+                    DateTime.now());
+                ref.read(postProvider.notifier).state = List.of(list)
+                  ..add(simpleProductPost);
+                Nav.pop(context);
+                Nav.push(PostDetailScreen(
+                  simpleProductPost.id,
+                  simpleProductPost: simpleProductPost,
+                ));
               },
             ),
     );
@@ -100,7 +135,7 @@ class _ImageSelectWidget extends StatelessWidget {
     return SizedBox(
       height: 100,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 150),
+        padding: const EdgeInsets.only(bottom: 15),
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
