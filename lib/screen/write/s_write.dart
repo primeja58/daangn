@@ -9,6 +9,7 @@ import 'package:fast_app_base/screen/post_detail/s_post_detail.dart';
 import 'package:fast_app_base/screen/write/d_select_image_source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../entity/dummies.dart';
 import '../../entity/product/vo_product.dart';
@@ -60,6 +61,17 @@ class _WriteScreenState extends ConsumerState<WriteScreen>
               imageList,
               onTap: () async{
                 final selectedSource = await SelectImageSourceDialog().show();
+
+                if(selectedSource == null){
+                  return;
+                }
+                final file = await ImagePicker().pickImage(source: selectedSource);
+                if(file ==null){
+                  return;
+                }
+                setState(() {
+                  imageList.add(file.path);
+                });
               },
             ),
             _TitleEditor(titleController),
@@ -128,45 +140,61 @@ class _WriteScreenState extends ConsumerState<WriteScreen>
 }
 
 class _ImageSelectWidget extends StatelessWidget {
-  final List<String> imageLIst;
+  final List<String> imageList;
   final VoidCallback onTap;
 
-  const _ImageSelectWidget(this.imageLIst, {super.key, required this.onTap});
+  const _ImageSelectWidget(this.imageList, {super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 15),
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            SelectImageButton(onTap: onTap, imageList: imageList),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SelectImageButton extends StatelessWidget {
+  const SelectImageButton({
+    super.key,
+    required this.onTap,
+    required this.imageList,
+  });
+
+  final VoidCallback onTap;
+  final List<String> imageList;
 
   @override
   Widget build(BuildContext context) {
     return Tap(
       onTap: onTap,
       child: SizedBox(
-        height: 100,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: 15),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.camera_alt),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                        text: imageLIst.length.toString(),
-                        style: const TextStyle(color: Colors.orange),
-                      ),
-                      const TextSpan(
-                        text: ' /10',
-                      )
-                    ]))
-                  ],
-                ).box.rounded.border(color: Colors.grey).make(),
+        height: 80,
+        width: 80,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.camera_alt),
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                text: imageList.length.toString(),
+                style: const TextStyle(color: Colors.orange),
               ),
-            ],
-          ),
-        ),
+              const TextSpan(
+                text: ' /10',
+              )
+            ]))
+          ],
+        ).box.rounded.border(color: Colors.grey).make(),
       ),
     );
   }

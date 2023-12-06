@@ -19,24 +19,40 @@ class _SelectImageSourceDialogState
       type: MaterialType.transparency,
       child: Center(
         child: Container(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 300,
           ),
-          decoration: BoxDecoration(color: context.backgroundColor, borderRadius: BorderRadius.circular(15)),
+          decoration: BoxDecoration(
+              color: context.backgroundColor,
+              borderRadius: BorderRadius.circular(15)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Tap(
-                onTap: (){
+                onTap: () {
                   widget.hide(ImageSource.camera);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.camera_alt_outlined), '카메라'.text.make(),
+                    const Icon(Icons.camera_alt_outlined),
+                    '카메라'.text.make(),
                   ],
-                ).p(15),
-              )
+                ).p(30),
+              ),
+              const Line().pSymmetric(h: 20),
+              Tap(
+                onTap: () {
+                  widget.hide(ImageSource.gallery);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.photo_outlined),
+                    '갤러리'.text.make(),
+                  ],
+                ).p(30),
+              ),
             ],
           ),
         ),
