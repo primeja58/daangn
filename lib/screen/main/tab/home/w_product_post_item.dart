@@ -8,13 +8,19 @@ import 'package:timeago/timeago.dart' as timeago;
 class ProductPostItem extends StatelessWidget {
   final SimpleProductPost post;
 
-  const ProductPostItem(this.post , {super.key});
+  const ProductPostItem(this.post, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Tap(
-      onTap: (){
-        Nav.push(PostDetailScreen(post.id, simpleProductPost: post,));
+      onTap: () {
+        Nav.push(
+            PostDetailScreen(
+              post.id,
+              simpleProductPost: post,
+            ),
+            durationMs: 800,
+            navAni: NavAni.Top);
       },
       child: Stack(
         children: [
@@ -23,9 +29,13 @@ class ProductPostItem extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(imageUrl: post.product.images[0],width: 150,)),
+                  child: CachedNetworkImage(
+                    imageUrl: post.product.images[0],
+                    width: 150,
+                  )),
               const Width(10),
-              Expanded(child: Column(
+              Expanded(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   post.title.text.size(17).make(),
@@ -33,7 +43,11 @@ class ProductPostItem extends StatelessWidget {
                     children: [
                       post.address.simpleAddress.text.make(),
                       '•'.text.make(),
-                      timeago.format(post.createdTime, locale: context.locale.languageCode).text.make(),
+                      timeago
+                          .format(post.createdTime,
+                              locale: context.locale.languageCode)
+                          .text
+                          .make(),
                     ],
                   ),
                   post.product.price.toWon().text.bold.make(),
