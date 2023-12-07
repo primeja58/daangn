@@ -7,27 +7,32 @@ import 'package:timeago/timeago.dart' as timeago;
 class PostContent extends StatelessWidget {
   final SimpleProductPost simpleProductPost;
   final ProductPost? productPost;
-  const PostContent({super.key, required this.simpleProductPost, this.productPost});
+
+  const PostContent(
+      {super.key, required this.simpleProductPost, this.productPost});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        simpleProductPost.title.text.bold.make(),
+        Hero(
+            tag: '${simpleProductPost.id}_title',
+            child: simpleProductPost.title.text.bold.make()),
         height20,
         timeago
             .format(simpleProductPost.createdTime,
-            locale: context.locale.languageCode)
+                locale: context.locale.languageCode)
             .text
             .size(13)
             .color(context.appColors.lessImportant)
             .make(),
-        if(productPost == null)
+        if (productPost == null)
           const Center(
             child: CircularProgressIndicator(),
-        ),
-        if(productPost != null) productPost!.content.text.make().pOnly(top: 30, bottom: 60),
+          ),
+        if (productPost != null)
+          productPost!.content.text.make().pOnly(top: 30, bottom: 60),
       ],
     ).pSymmetric(h: 15);
   }

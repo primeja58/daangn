@@ -117,7 +117,7 @@ class _WriteScreenState extends ConsumerState<WriteScreen>
                       imageList,
                     ),
                     title,
-                    Address('서울시 강남구 역삼동', '역삼동'),
+                    const Address('서울시 강남구 역삼동', '역삼동'),
                     0,
                     0,
                     DateTime.now());
@@ -214,7 +214,7 @@ class _TitleEditor extends StatelessWidget {
         height5,
         TextField(
           controller: controller,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               hintText: '제목',
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -284,7 +284,7 @@ class _PriceEditorState extends State<_PriceEditor> {
           controller: widget.controller,
           keyboardType: TextInputType.number,
           enabled: !isDonateMode,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               hintText: '￦ 가격을 입력해 주세요',
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -315,7 +315,7 @@ class _DescEditor extends StatelessWidget {
         TextField(
           controller: controller,
           maxLines: 7,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               hintText: '에 올릴 게시글 내용을 작성해주세요',
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
